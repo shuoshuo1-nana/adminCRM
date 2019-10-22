@@ -24,7 +24,6 @@ import java.util.List;
  * 2019/10/21
  */
 public class ActivityController extends HttpServlet {
-    private ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
 
     @Override
     protected void service(HttpServletRequest requset, HttpServletResponse response) throws ServletException, IOException {
@@ -65,6 +64,7 @@ public class ActivityController extends HttpServlet {
         ad.setDescription(description);
         ad.setCreateTime(createTime);
         ad.setCreateBy(createBy);
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
         boolean flag =as.addActivity(ad);
         PrintJson.printJsonFlag(response,flag);
     }
