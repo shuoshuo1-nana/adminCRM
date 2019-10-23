@@ -1,4 +1,4 @@
-package com.bjpowernode.crm.settings.damain;
+package com.bjpowernode.crm.settings.domain;
 
 /**
  * 王硕

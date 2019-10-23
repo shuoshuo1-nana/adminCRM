@@ -18,6 +18,23 @@ public class Activity {
     private String editTime;    //修改时间
     private String editBy;  //修改人
 
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "id='" + id + '\'' +
+                ", owner='" + owner + '\'' +
+                ", name='" + name + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", cost='" + cost + '\'' +
+                ", description='" + description + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", createBy='" + createBy + '\'' +
+                ", editTime='" + editTime + '\'' +
+                ", editBy='" + editBy + '\'' +
+                '}';
+    }
+
     public String getId() {
         return id;
     }

@@ -1,182 +1,179 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.bjpowernode.crm</groupId>
-  <artifactId>crdweb</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>war</packaging>
+    <groupId>com.bjpowernode.crm</groupId>
+    <artifactId>crdweb</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
     <dependencies>
 
 
-    <dependency>
+        <dependency>
 
-    <groupId>junit</groupId>
+            <groupId>junit</groupId>
 
-    <artifactId>junit</artifactId>
+            <artifactId>junit</artifactId>
 
-    <version>4.12</version>
+            <version>4.12</version>
 
-    <scope>test</scope>
+            <scope>test</scope>
 
-</dependency>
-
-
-    <dependency>
-
-    <groupId>javax.servlet</groupId>
-
-    <artifactId>javax.servlet-api</artifactId>
-
-    <version>4.0.1</version>
-
-    <scope>provided</scope>
-
-</dependency>
+        </dependency>
 
 
-    <dependency>
+        <dependency>
 
-    <groupId>javax.servlet.jsp</groupId>
+            <groupId>javax.servlet</groupId>
 
-    <artifactId>jsp-api</artifactId>
+            <artifactId>javax.servlet-api</artifactId>
 
-    <version>2.1.3-b06</version>
+            <version>4.0.1</version>
 
-    <scope>provided</scope>
+            <scope>provided</scope>
 
-</dependency>
-
-
-    <dependency>
-
-    <groupId>org.mybatis</groupId>
-
-    <artifactId>mybatis</artifactId>
-
-    <version>3.4.5</version>
-
-</dependency>
+        </dependency>
 
 
-    <dependency>
+        <dependency>
 
-    <groupId>javax.servlet</groupId>
+            <groupId>javax.servlet.jsp</groupId>
 
-    <artifactId>jstl</artifactId>
+            <artifactId>jsp-api</artifactId>
 
-    <version>1.2</version>
+            <version>2.1.3-b06</version>
 
-</dependency>
+            <scope>provided</scope>
 
-    <!--jackson-->
-
-
-
-    <dependency>
-
-    <groupId>com.fasterxml.jackson.core</groupId>
-
-    <artifactId>jackson-core</artifactId>
-
-    <version>2.9.0</version>
-
-</dependency>
+        </dependency>
 
 
-    <dependency>
+        <dependency>
 
-    <groupId>com.fasterxml.jackson.core</groupId>
+            <groupId>org.mybatis</groupId>
 
-    <artifactId>jackson-databind</artifactId>
+            <artifactId>mybatis</artifactId>
 
-    <version>2.9.0</version>
+            <version>3.4.5</version>
 
-</dependency>
-
-
-    <dependency>
-
-    <groupId>mysql</groupId>
-
-    <artifactId>mysql-connector-java</artifactId>
-
-    <version>5.1.23</version>
-
-</dependency>
+        </dependency>
 
 
-    <dependency>
+        <dependency>
 
-    <groupId>log4j</groupId>
+            <groupId>javax.servlet</groupId>
 
-    <artifactId>log4j</artifactId>
+            <artifactId>jstl</artifactId>
 
-    <version>1.2.17</version>
+            <version>1.2</version>
 
-</dependency>
+        </dependency>
 
-</dependencies>
+        <!--jackson-->
+
+
+        <dependency>
+
+            <groupId>com.fasterxml.jackson.core</groupId>
+
+            <artifactId>jackson-core</artifactId>
+
+            <version>2.9.0</version>
+
+        </dependency>
+
+
+        <dependency>
+
+            <groupId>com.fasterxml.jackson.core</groupId>
+
+            <artifactId>jackson-databind</artifactId>
+
+            <version>2.9.0</version>
+
+        </dependency>
+
+
+        <dependency>
+
+            <groupId>mysql</groupId>
+
+            <artifactId>mysql-connector-java</artifactId>
+
+            <version>5.1.23</version>
+
+        </dependency>
+
+
+        <dependency>
+
+            <groupId>log4j</groupId>
+
+            <artifactId>log4j</artifactId>
+
+            <version>1.2.17</version>
+
+        </dependency>
+
+    </dependencies>
 
 
     <build>
 
 
-    <resources>
+        <resources>
 
 
-    <resource>
+            <resource>
 
-    <directory>src/main/java</directory>
+                <directory>src/main/java</directory>
 
-    <!--所在的目录-->
-
-
-
-    <includes>
-
-    <!--包括目录下的.properties,.xml文件都会扫描到-->
+                <!--所在的目录-->
 
 
-    <include>**/*.properties</include>
+                <includes>
 
-    <include>**/*.xml</include>
-
-</includes>
-
-    <filtering>false</filtering>
-
-</resource>
-
-</resources>
+                    <!--包括目录下的.properties,.xml文件都会扫描到-->
 
 
-    <plugins>
+                    <include>**/*.properties</include>
 
-    <!-- 编码和编译和JDK版本 -->
+                    <include>**/*.xml</include>
+
+                </includes>
+
+                <filtering>false</filtering>
+
+            </resource>
+
+        </resources>
 
 
+        <plugins>
 
-    <plugin>
-
-    <artifactId>maven-compiler-plugin</artifactId>
-
-    <version>3.1</version>
+            <!-- 编码和编译和JDK版本 -->
 
 
-    <configuration>
+            <plugin>
 
-    <source>1.8</source>
+                <artifactId>maven-compiler-plugin</artifactId>
 
-    <target>1.8</target>
+                <version>3.1</version>
 
-</configuration>
 
-</plugin>
+                <configuration>
 
-</plugins>
+                    <source>1.8</source>
 
-</build>
+                    <target>1.8</target>
+
+                </configuration>
+
+            </plugin>
+
+        </plugins>
+
+    </build>
 </project>

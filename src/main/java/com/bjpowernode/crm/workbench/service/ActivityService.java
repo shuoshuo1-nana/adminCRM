@@ -2,6 +2,7 @@ package com.bjpowernode.crm.workbench.service;
 
 import com.bjpowernode.crm.settings.domain.User;
 import com.bjpowernode.crm.workbench.domain.Activity;
+import com.bjpowernode.crm.workbench.vo.PagingVO;
 
 import java.util.List;
 import java.util.Map;
@@ -13,4 +14,12 @@ import java.util.Map;
 public interface ActivityService {
 
     boolean addActivity(Activity act);
+
+    PagingVO<Activity> selectActivity(Map<String, Object> map);
+
+    Map<String, Object> showActivity(String id);
+
+    boolean update(Activity a);
+
+    boolean delete(String[] ids);
 }
