@@ -32,6 +32,17 @@
 
         <%--初始化网页加载--%>
         $(function () {
+
+            <%--绑定查询按键--%>
+            $("#selectBtn").click(function () {
+                $("#hide-name").val($.trim($("#select-name").val()));
+                $("#hide-owner").val($.trim($("#select-owner").val()));
+                $("#hide-startDate").val($.trim($("#select-startDate").val()));
+                $("#hide-endDate").val($.trim($("#select-endDate").val()));
+                pageList(1 ,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
+
+            })
+
             <%--调用加载user姓名函数--%>
             selectusers();
 
@@ -42,7 +53,7 @@
             time();
 
             <%--调用分页查询函数--%>
-            pageList(1, 2);
+            pageList(1,4);
 
             <%--显示市场活动信息--%>
             // showActivity($length);
@@ -120,7 +131,7 @@
                     success: function (data) {
                         if (data) {
                             $("#editActivityModal").modal("hide");
-                            pageList(1, 2)
+                            pageList($("#activityPage").bs_pagination('getOption', 'currentPage') ,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
                         } else {
                             alert("更新错误请重试");
                         }
@@ -150,7 +161,7 @@
                             data: param,
                             success: function (data) {
                                 if (data) {
-                                    pageList(1, 2);
+                                    pageList(1 ,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
                                 } else {
                                     alert("删除失败，请重试");
                                 }
@@ -237,13 +248,22 @@
                 })
 
                 $("#createActivityModal").modal("hide");
-                pageList(1, 2);
+                pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
             })
         }
+
+
+
+
+
 
         <%--分页查询--%>
 
         function pageList(pageNo, pageSize) {
+            $("#select-name").val($("#hide-name").val());
+            $("#select-owner").val($("#hide-owner").val());
+            $("#select-startDate").val($("#hide-startDate").val());
+            $("#select-endDate").val($("#hide-endDate").val());
             $.ajax({
                 url: "workbench/Activity/selectActivity.do",
                 type: "post",
@@ -272,7 +292,11 @@
                         html += '<td>' + n.owner + '</td>';
                         html += '<td>' + n.startDate + '</td>';
                         html += '<td>' + n.endDate + '</td>';
+
                     })
+
+
+
 
                     $("#selects").html(html);
 
@@ -285,7 +309,7 @@
                         totalPages: totalPages, // 总页数
                         totalRows: data.total, // 总记录条数
 
-                        visiblePageLinks: 3, // 显示几个卡片
+                        visiblePageLinks: 5, // 显示几个卡片
 
                         showGoToPage: true,
                         showRowsPerPage: true,
@@ -310,6 +334,10 @@
     </script>
 </head>
 <body>
+<input type="hidden"  id="hide-name">
+<input type="hidden" id="hide-owner">
+<input type="hidden"  id="hide-startDate">
+<input type="hidden"  id="hide-endDate">
 
 <!-- 创建市场活动的模态窗口 -->
 <div class="modal fade" id="createActivityModal" role="dialog">
@@ -388,7 +416,7 @@
             <div class="modal-body">
 
                 <form class="form-horizontal" role="form">
-                    <span id="edit-id"></span>
+                    <input type="hidden"  id="edit-id">
                     <div class="form-group">
                         <label for="edit-marketActivityOwner" class="col-sm-2 control-label">所有者<span
                                 style="font-size: 15px; color: red;">*</span></label>
@@ -481,7 +509,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-default">查询</button>
+                <button type="button" class="btn btn-default" id="selectBtn">查询</button>
 
             </form>
         </div>

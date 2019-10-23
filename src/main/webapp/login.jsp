@@ -13,6 +13,9 @@
     <script>
         <%--网页加载时运行--%>
         $(function () {
+            if(window.top!=window){
+                window.top.location=window.location;
+            }
             $("#loginact").val("");
 
 
