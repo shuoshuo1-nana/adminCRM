@@ -1,6 +1,15 @@
+<%@page pageEncoding="UTF-8" contentType="text/html; UTF-8" %>
+
+<%
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+%>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
+	<base<%=basePath%>>
 <meta charset="UTF-8">
 
 <link href="../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />

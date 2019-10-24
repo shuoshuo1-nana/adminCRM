@@ -2,6 +2,7 @@ package com.bjpowernode.crm.workbench.service;
 
 import com.bjpowernode.crm.settings.domain.User;
 import com.bjpowernode.crm.workbench.domain.Activity;
+import com.bjpowernode.crm.workbench.domain.ActivityRemark;
 import com.bjpowernode.crm.workbench.vo.PagingVO;
 
 import java.util.List;
@@ -24,4 +25,11 @@ public interface ActivityService {
     boolean delete(String[] ids);
 
     Activity detail(String id);
+
+    List<ActivityRemark> showRemark(String id);
+
+    boolean addRemark(ActivityRemark ar);
+
+    boolean deleteRemark(String id);
+
 }

@@ -8,6 +8,7 @@ import com.bjpowernode.crm.utils.PrintJson;
 import com.bjpowernode.crm.utils.ServiceFactory;
 import com.bjpowernode.crm.utils.UUIDUtil;
 import com.bjpowernode.crm.workbench.domain.Activity;
+import com.bjpowernode.crm.workbench.domain.ActivityRemark;
 import com.bjpowernode.crm.workbench.service.ActivityService;
 import com.bjpowernode.crm.workbench.service.impl.ActivityServiceImpl;
 import com.bjpowernode.crm.workbench.vo.PagingVO;
@@ -47,14 +48,58 @@ public class ActivityController extends HttpServlet {
         } else if ("/workbench/activity/detail.do".equals(path)) {
             System.out.println("显示市场信息详情");
             detail(requset, response);
+        } else if ("/workbench/activity/showRemark.do".equals(path)) {
+            System.out.println("显示市场信息详情");
+            showRemark(requset, response);
+        } else if ("/workbench/activity/addRemark.do".equals(path)) {
+            System.out.println("显示市场信息详情");
+            addRemark(requset, response);
+        }else if ("/workbench/activity/deleteRemark.do".equals(path)) {
+            System.out.println("显示市场信息详情");
+            deleteRemark(requset, response);
         }
+    }
+
+    private void deleteRemark(HttpServletRequest requset, HttpServletResponse response) {
+        String id = requset.getParameter("id");
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        boolean flag = as.deleteRemark(id);
+        PrintJson.printJsonFlag(response, flag);
+    }
+
+    private void addRemark(HttpServletRequest requset, HttpServletResponse response) {
+        String activityId = requset.getParameter("id");
+        String noteContent = requset.getParameter("noteContent");
+        String id = UUIDUtil.getUUID();
+        String createTime = DateTimeUtil.getSysTime();
+        String createBy = ((User) requset.getSession().getAttribute("user")).getName();
+
+        ActivityRemark ar = new ActivityRemark();
+        ar.setId(id);
+        ar.setNoteContent(noteContent);
+        ar.setCreateTime(createTime);
+        ar.setCreateBy(createBy);
+        ar.setActivityId(activityId);
+        ar.setEditFlag("0");
+
+
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        boolean flag = as.addRemark(ar);
+    }
+
+    private void showRemark(HttpServletRequest requset, HttpServletResponse response) {
+        System.out.println("显示到了备注详情");
+        String id = requset.getParameter("id");
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        List<ActivityRemark> arlist = as.showRemark(id);
+        PrintJson.printJsonObj(response, arlist);
     }
 
     private void detail(HttpServletRequest requset, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("展现活动信息详情");
         String id = requset.getParameter("id");
         ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
-        Activity a= as.detail(id);
+        Activity a = as.detail(id);
         System.out.println(a);
         requset.setAttribute("a", a);
         requset.getRequestDispatcher("/workbench/activity/detail.jsp").forward(requset, response);
