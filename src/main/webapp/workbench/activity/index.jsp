@@ -57,8 +57,7 @@
             })
             <%--显示市场活动信息--%>
             $("#updateBtn").click(function () {
-                //获取选中id   input[name=xz]:checked
-                var $xz = $("input[name=xz]:checked");
+                //获取选中id   input[name=xz]:checkedvar $xz = $("input[name=xz]:checked");
                 if ($xz.length == 0) {
                     alert("请选择一条数据作为修改");
                 } else if ($xz.length > 1) {
@@ -285,7 +284,7 @@
                         totalPages: totalPages, // 总页数
                         totalRows: data.total, // 总记录条数
 
-                        visiblePageLinks: 3, // 显示几个卡片
+                        visiblePageLinks: 5, // 显示几个卡片
 
                         showGoToPage: true,
                         showRowsPerPage: true,
