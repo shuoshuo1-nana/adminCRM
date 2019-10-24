@@ -104,13 +104,17 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public boolean addRemark(ActivityRemark ar) {
-        boolean flag = false;
+    public Map<String, Object> addRemark(ActivityRemark ar) {
         int count = ActivityRemarkDao.addRemark(ar);
+        Map<String ,Object> map = new HashMap<>();
+        boolean flag = false;
         if (count == 1) {
             flag = true;
+            ActivityRemark arr =ActivityRemarkDao.getActivityRemarkId(ar.getId());
+            map.put("flag", flag);
+            map.put("arr", arr);
         }
-        return false;
+        return map;
     }
 
     @Override
@@ -133,4 +137,5 @@ public class ActivityServiceImpl implements ActivityService {
         return false;
 
     }
+
 }

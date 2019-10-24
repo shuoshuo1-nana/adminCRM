@@ -109,7 +109,9 @@ public class ActivityController extends HttpServlet {
 
 
         ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
-        boolean flag = as.addRemark(ar);
+        Map<String,Object> map = as.addRemark(ar);
+
+        PrintJson.printJsonObj(response, map);
     }
 
     private void showRemark(HttpServletRequest requset, HttpServletResponse response) {

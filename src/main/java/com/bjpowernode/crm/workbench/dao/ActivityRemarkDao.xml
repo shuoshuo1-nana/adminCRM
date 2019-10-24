@@ -46,6 +46,10 @@
         where id =#{id}
 
     </update>
+
+    <select id="getActivityRemarkId" resultType="ActivityRemark">
+        select * from tbl_activity_remark where id =#{id}
+    </select>
 </mapper>
 
 

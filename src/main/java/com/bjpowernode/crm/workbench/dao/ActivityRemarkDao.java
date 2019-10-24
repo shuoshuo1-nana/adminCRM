@@ -20,4 +20,5 @@ public interface ActivityRemarkDao {
 
     int updateRemark(ActivityRemark ar);
 
+    ActivityRemark getActivityRemarkId(String id);
 }
