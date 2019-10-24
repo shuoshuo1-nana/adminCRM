@@ -123,6 +123,7 @@
                     dataType: "json",
                     success: function (data) {
                         if (data) {
+                            alert("更新成功请刷新");
                             $("#editRemarkModal").modal("hide");
                         } else {
                             alert("更改失败，请重试");
@@ -146,8 +147,7 @@
                     dataType: "json",
                     success: function (data) {
                         if (data) {
-
-
+                            $("#" + id).remove();
                         } else {
                             alert("删除成功");
                         }
@@ -188,8 +188,8 @@
                             html += '</div>';
                             html += '</div>';
                             html += '</div>';
-
                             $("#remarkDiv").before(html);
+                            $("#remark").val("");
                         } else {
                             alert("备注失败，请重试");
                         }
