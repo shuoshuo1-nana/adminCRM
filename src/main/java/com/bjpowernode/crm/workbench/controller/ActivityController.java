@@ -11,6 +11,7 @@ import com.bjpowernode.crm.workbench.domain.Activity;
 import com.bjpowernode.crm.workbench.service.ActivityService;
 import com.bjpowernode.crm.workbench.service.impl.ActivityServiceImpl;
 import com.bjpowernode.crm.workbench.vo.PagingVO;
+import sun.misc.Request;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -41,15 +42,28 @@ public class ActivityController extends HttpServlet {
             showActivity(requset, response);
         } else if ("/workbench/Activity/update.do".equals(path)) {
             update(requset, response);
-        }else if ("/workbench/Activity/delete.do".equals(path)) {
+        } else if ("/workbench/Activity/delete.do".equals(path)) {
             delete(requset, response);
+        } else if ("/workbench/activity/detail.do".equals(path)) {
+            System.out.println("显示市场信息详情");
+            detail(requset, response);
         }
+    }
+
+    private void detail(HttpServletRequest requset, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("展现活动信息详情");
+        String id = requset.getParameter("id");
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        Activity a= as.detail(id);
+        System.out.println(a);
+        requset.setAttribute("a", a);
+        requset.getRequestDispatcher("/workbench/activity/detail.jsp").forward(requset, response);
     }
 
     private void delete(HttpServletRequest requset, HttpServletResponse response) {
         String[] ids = requset.getParameterValues("id");
-        ActivityService as =(ActivityService)ServiceFactory.getService(new ActivityServiceImpl());
-        boolean flag =as.delete(ids);
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        boolean flag = as.delete(ids);
         PrintJson.printJsonFlag(response, flag);
     }
 
@@ -78,8 +92,8 @@ public class ActivityController extends HttpServlet {
         String endDate = requset.getParameter("edit-endDate");
         String cost = requset.getParameter("cost");
         String description = requset.getParameter("description");
-        String editTime =DateTimeUtil.getSysTime();
-        String editBy =((User) requset.getSession().getAttribute("user")).getName();
+        String editTime = DateTimeUtil.getSysTime();
+        String editBy = ((User) requset.getSession().getAttribute("user")).getName();
         Activity a = new Activity();
         a.setId(id);
         a.setOwner(owner);

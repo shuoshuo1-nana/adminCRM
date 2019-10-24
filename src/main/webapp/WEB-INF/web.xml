@@ -41,6 +41,8 @@
     <url-pattern>/workbench/Activity/update.do</url-pattern>
     <!--删除市场活动信息-->
     <url-pattern>/workbench/Activity/delete.do</url-pattern>
+    <!--展现市场活动信息-->
+    <url-pattern>/workbench/activity/detail.do</url-pattern>
   </servlet-mapping>
 
 

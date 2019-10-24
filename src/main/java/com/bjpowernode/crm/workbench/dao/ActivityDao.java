@@ -23,4 +23,6 @@ public interface ActivityDao {
     int update(Activity a);
 
     int delete(String[] ids);
+
+    Activity detail(String id);
 }

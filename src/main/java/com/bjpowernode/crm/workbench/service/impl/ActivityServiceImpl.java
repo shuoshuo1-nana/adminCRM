@@ -9,7 +9,6 @@ import com.bjpowernode.crm.workbench.domain.Activity;
 import com.bjpowernode.crm.workbench.service.ActivityService;
 import com.bjpowernode.crm.workbench.vo.PagingVO;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,5 +87,11 @@ public class ActivityServiceImpl implements ActivityService {
             flag =true;
         }
         return flag;
+    }
+
+    @Override
+    public Activity detail(String id) {
+        Activity a =adao.detail(id);
+        return a;
     }
 }

@@ -69,6 +69,7 @@
             <%--显示市场活动信息--%>
             $("#updateBtn").click(function () {
                 //获取选中id   input[name=xz]:checkedvar $xz = $("input[name=xz]:checked");
+                var $xz = $("input[name=xz]:checked");
                 if ($xz.length == 0) {
                     alert("请选择一条数据作为修改");
                 } else if ($xz.length > 1) {
@@ -179,13 +180,11 @@
         function time() {
             <%--日历系统--%>
             $(".time").datetimepicker({
-                language: "zh-CN",
-                format: "yyyy-mm-dd",//显示格式
-                minView: "hour",//设置只显示到月份
-                initialDate: new Date(),//初始化当前日期
-                autoclose: true,//选中自动关闭
-                todayBtn: true, //显示今日按钮
-                clearBtn: true,
+                minView: "month",
+                language:  'zh-CN',
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayBtn: true,
                 pickerPosition: "bottom-left"
             });
         }
@@ -286,16 +285,12 @@
                         html += '<tr class="active">';
                         html += '<tr class="active">';
                         html += '<td><input type="checkbox" name="xz" value="' + n.id + '"/></td>';
-                        html += '<td><a style="text-decoration: none; cursor: pointer;"';
-                        html += 'onclick="window.location.href=workbench/activity/detail.jsp;">' + n.name + '</a></td>';
+                        html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.do?id='+n.id+'\';">'+n.name+'</a></td>';
                         html += '<td>' + n.owner + '</td>';
                         html += '<td>' + n.startDate + '</td>';
                         html += '<td>' + n.endDate + '</td>';
 
                     })
-
-
-
 
                     $("#selects").html(html);
 

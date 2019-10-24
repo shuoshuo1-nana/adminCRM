@@ -22,4 +22,6 @@ public interface ActivityService {
     boolean update(Activity a);
 
     boolean delete(String[] ids);
+
+    Activity detail(String id);
 }
