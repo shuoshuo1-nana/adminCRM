@@ -69,6 +69,8 @@
             addRemark();
         });
 
+        <%--显示备注信息--%>
+
         function remark() {
             $.ajax({
                 url: "showRemark.do",
@@ -83,13 +85,13 @@
                     var html = "";
                     $.each(data, function (i, n) {
 
-                        html += '<div class="remarkDiv" style="height: 60px;">';
+                        html += '<div id="' + n.id + '" class="remarkDiv" style="height: 60px;">';
                         html += '<img title="zhangsan" src="../../image/user-thumbnail.png" style="width: 30px; height:30px;">';
                         html += '<div style="position: relative; top: -40px; left: 40px;" >';
-                        html += '<h5>' + n.noteContent + '</h5>';
+                        html += '<h5 id="show-noteContent">' + n.noteContent + '</h5>';
                         html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${a.name}</b> <small style="color: gray;"> ' + (n.editFlag == 0 ? n.createTime : n.editTime) + '由' + (n.editFlag == 0 ? n.createBy : n.editBy) + '</small>';
                         html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
-                        html += '<a class="myHref" href="javascript:void(0);"><span onclick="updateRemark(\'' + n.id + '\')" class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
+                        html += '<a class="myHref" href="javascript:void(0);"><span onclick="updateRemark(\'' + n.id + '\',\'' + n.noteContent + '\')" class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
                         html += '&nbsp;&nbsp;&nbsp;&nbsp;';
                         html += '<a class="myHref" href="javascript:void(0);"><span onclick="deleteRemark(\'' + n.id + '\')" class="glyphicon glyphicon-remove" style="font-size: 20px; color: #FF0000;"></span></a>';
                         html += '</div>';
@@ -105,9 +107,31 @@
 
         <%--更新备注--%>
 
-        function updateRemark(id) {
+        function updateRemark(id, a) {
             $("#editRemarkModal").modal("show");
+            $("#noteContent").val(a);
+            $("#updateRemarkBtn").click(function () {
+                var noteContent = $("#noteContent").val();
+                $.ajax({
+                    url: "updateRemark.do",
+                    data: {
+                        "id": id,
+                        "activityId": "${a.id}",
+                        "noteContent": noteContent
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data) {
+                            $("#editRemarkModal").modal("hide");
+                        } else {
+                            alert("更改失败，请重试");
+                        }
+                    }
+                })
+            })
         }
+
 
         <%--删除备注--%>
 
@@ -121,8 +145,8 @@
                     type: "post",
                     dataType: "json",
                     success: function (data) {
-
                         if (data) {
+
 
                         } else {
                             alert("删除成功");
@@ -134,11 +158,12 @@
             }
         }
 
+        <%--添加备注信息--%>
 
         function addRemark() {
             $("#addBtn").click(function () {
                 var text = $.trim($("#remark").val());
-
+                var html = "";
                 $.ajax({
                     url: "addRemark.do",
                     data: {
@@ -147,9 +172,24 @@
                     },
                     type: "post",
                     dataType: "json",
+
                     success: function (data) {
                         if (data) {
-                            remark();
+
+                            html += '<div id="' + n.id + '" class="remarkDiv" style="height: 60px;">';
+                            html += '<img title="zhangsan" src="../../image/user-thumbnail.png" style="width: 30px; height:30px;">';
+                            html += '<div style="position: relative; top: -40px; left: 40px;" >';
+                            html += '<h5 id="show-noteContent">' + n.noteContent + '</h5>';
+                            html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${a.name}</b> <small style="color: gray;"> ' + (n.editFlag == 0 ? n.createTime : n.editTime) + '由' + (n.editFlag == 0 ? n.createBy : n.editBy) + '</small>';
+                            html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
+                            html += '<a class="myHref" href="javascript:void(0);"><span onclick="updateRemark(\'' + n.id + '\',\'' + n.noteContent + '\')" class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
+                            html += '&nbsp;&nbsp;&nbsp;&nbsp;';
+                            html += '<a class="myHref" href="javascript:void(0);"><span onclick="deleteRemark(\'' + n.id + '\')" class="glyphicon glyphicon-remove" style="font-size: 20px; color: #FF0000;"></span></a>';
+                            html += '</div>';
+                            html += '</div>';
+                            html += '</div>';
+
+                            $("#remarkDiv").before(html);
                         } else {
                             alert("备注失败，请重试");
                         }

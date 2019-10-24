@@ -11,7 +11,7 @@ public class ActivityRemark {
     private String createTime;  //创建时间
     private String createBy;    //创建人
     private String editTime;    //修改时间
-    private String editBy;  //修改人
+    private String editBy;          //修改人
     private String editFlag;    //是否修改过的标记
     private String activityId;  //外键 关联tbl_activity
 

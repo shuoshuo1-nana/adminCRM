@@ -55,9 +55,34 @@ public class ActivityController extends HttpServlet {
             System.out.println("显示市场信息详情");
             addRemark(requset, response);
         }else if ("/workbench/activity/deleteRemark.do".equals(path)) {
-            System.out.println("显示市场信息详情");
+            System.out.println("删除市场信息详情");
             deleteRemark(requset, response);
+        }else if ("/workbench/activity/updateRemark.do".equals(path)) {
+            System.out.println("修改市场信息详情");
+            updateRemark(requset, response);
         }
+    }
+
+    private void updateRemark(HttpServletRequest requset, HttpServletResponse response) {
+        //获取浏览器信息
+        String id = requset.getParameter("id");
+        String noteContent = requset.getParameter("noteContent");
+//        String activityId = requset.getParameter("activityId");
+        //获取内部信息
+        String editTime =DateTimeUtil.getSysTime();
+        String editBy =((User) requset.getSession().getAttribute("user")).getName();
+        ActivityRemark ar = new ActivityRemark();
+        ar.setEditFlag("1");
+//        ar.setActivityId(activityId);
+        ar.setId(id);
+        ar.setEditBy(editBy);
+        ar.setEditTime(editTime);
+        ar.setNoteContent(noteContent);
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        boolean flag = as.updateRemark(ar);
+        PrintJson.printJsonFlag(response, flag);
+
+
     }
 
     private void deleteRemark(HttpServletRequest requset, HttpServletResponse response) {
@@ -100,7 +125,6 @@ public class ActivityController extends HttpServlet {
         String id = requset.getParameter("id");
         ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
         Activity a = as.detail(id);
-        System.out.println(a);
         requset.setAttribute("a", a);
         requset.getRequestDispatcher("/workbench/activity/detail.jsp").forward(requset, response);
     }

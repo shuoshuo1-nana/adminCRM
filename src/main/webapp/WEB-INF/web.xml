@@ -49,6 +49,8 @@
     <url-pattern>/workbench/activity/addRemark.do</url-pattern>
     <!--删除备注-->
     <url-pattern>/workbench/activity/deleteRemark.do</url-pattern>
+    <!--更新备注-->
+    <url-pattern>/workbench/activity/updateRemark.do</url-pattern>
   </servlet-mapping>
 
 
