@@ -88,8 +88,8 @@
                         html += '<div id="' + n.id + '" class="remarkDiv" style="height: 60px;">';
                         html += '<img title="zhangsan" src="../../image/user-thumbnail.png" style="width: 30px; height:30px;">';
                         html += '<div style="position: relative; top: -40px; left: 40px;" >';
-                        html += '<h5 id="show-noteContent">' + n.noteContent + '</h5>';
-                        html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${a.name}</b> <small style="color: gray;"> ' + (n.editFlag == 0 ? n.createTime : n.editTime) + '由' + (n.editFlag == 0 ? n.createBy : n.editBy) + '</small>';
+                        html += '<h5 id="s' + n.id + '">' + n.noteContent + '</h5>';
+                        html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${a.name}</b> <small id="e'+n.id+'" style="color: gray;"> ' + (n.editFlag == 0 ? n.createTime : n.editTime) + '由' + (n.editFlag == 0 ? n.createBy : n.editBy) + '</small>';
                         html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
                         html += '<a class="myHref" href="javascript:void(0);"><span onclick="updateRemark(\'' + n.id + '\',\'' + n.noteContent + '\')" class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
                         html += '&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -123,7 +123,8 @@
                     dataType: "json",
                     success: function (data) {
                         if (data) {
-                            alert("更新成功请刷新");
+                            $("#s"+id).html(data.arr.noteContent);
+                            $("#e"+id).html(data.arr.editTime+" 由"+data.arr.editBy);
                             $("#editRemarkModal").modal("hide");
                         } else {
                             alert("更改失败，请重试");
@@ -179,8 +180,8 @@
                             html += '<div id="' + data.arr.id + '" class="remarkDiv" style="height: 60px;">';
                             html += '<img title="zhangsan" src="../../image/user-thumbnail.png" style="width: 30px; height:30px;">';
                             html += '<div style="position: relative; top: -40px; left: 40px;" >';
-                            html += '<h5 id="show-noteContent">' + data.arr.noteContent + '</h5>';
-                            html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${a.name}</b> <small style="color: gray;"> ' + data.arr.createTime + '由' + data.arr.createBy + '</small>';
+                            html += '<h5 id="s' + data.arr.id + '">' + data.arr.noteContent + '</h5>';
+                            html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${a.name}</b> <small id="e'+data.arr.id+'" style="color: gray;"> ' + data.arr.createTime + '由' + data.arr.createBy + '</small>';
                             html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
                             html += '<a class="myHref" href="javascript:void(0);"><span onclick="updateRemark(\'' + data.arr.id + '\',\'' + data.arr.noteContent + '\')" class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
                             html += '&nbsp;&nbsp;&nbsp;&nbsp;';

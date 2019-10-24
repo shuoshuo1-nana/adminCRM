@@ -79,8 +79,8 @@ public class ActivityController extends HttpServlet {
         ar.setEditTime(editTime);
         ar.setNoteContent(noteContent);
         ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
-        boolean flag = as.updateRemark(ar);
-        PrintJson.printJsonFlag(response, flag);
+        Map<String, Object> arr = as.updateRemark(ar);
+        PrintJson.printJsonObj(response, arr);
 
 
     }

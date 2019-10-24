@@ -128,13 +128,17 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public boolean updateRemark(ActivityRemark ar) {
-        boolean flag = false;
+    public Map<String, Object> updateRemark(ActivityRemark ar) {
         int count = ActivityRemarkDao.updateRemark(ar);
+        Map<String ,Object> map = new HashMap<>();
+        boolean flag = false;
         if (count == 1) {
             flag = true;
+            ActivityRemark arr =ActivityRemarkDao.getActivityRemarkId(ar.getId());
+            map.put("flag", flag);
+            map.put("arr", arr);
         }
-        return false;
+        return map;
 
     }
 
