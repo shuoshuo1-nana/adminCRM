@@ -22,40 +22,81 @@
         var cancelAndSaveBtnDefault = true;
 
         $(function () {
-            $("#remark").focus(function () {
-                if (cancelAndSaveBtnDefault) {
-                    //设置remarkDiv的高度为130px
-                    $("#remarkDiv").css("height", "130px");
+                $("#remark").focus(function () {
+                    if (cancelAndSaveBtnDefault) {
+                        //设置remarkDiv的高度为130px
+                        $("#remarkDiv").css("height", "130px");
+                        //显示
+                        $("#cancelAndSaveBtn").show("2000");
+                        cancelAndSaveBtnDefault = false;
+                    }
+                });
+
+                $("#cancelBtn").click(function () {
                     //显示
-                    $("#cancelAndSaveBtn").show("2000");
-                    cancelAndSaveBtnDefault = false;
-                }
-            });
+                    $("#cancelAndSaveBtn").hide();
+                    //设置remarkDiv的高度为130px
+                    $("#remarkDiv").css("height", "90px");
+                    cancelAndSaveBtnDefault = true;
+                });
 
-            $("#cancelBtn").click(function () {
-                //显示
-                $("#cancelAndSaveBtn").hide();
-                //设置remarkDiv的高度为130px
-                $("#remarkDiv").css("height", "90px");
-                cancelAndSaveBtnDefault = true;
-            });
+                $(".remarkDiv").mouseover(function () {
+                    $(this).children("div").children("div").show();
+                });
 
-            $(".remarkDiv").mouseover(function () {
-                $(this).children("div").children("div").show();
-            });
+                $(".remarkDiv").mouseout(function () {
+                    $(this).children("div").children("div").hide();
+                });
 
-            $(".remarkDiv").mouseout(function () {
-                $(this).children("div").children("div").hide();
-            });
+                $(".myHref").mouseover(function () {
+                    $(this).children("span").css("color", "red");
+                });
 
-            $(".myHref").mouseover(function () {
-                $(this).children("span").css("color", "red");
-            });
+                $(".myHref").mouseout(function () {
+                    $(this).children("span").css("color", "#E6E6E6");
+                });
 
-            $(".myHref").mouseout(function () {
-                $(this).children("span").css("color", "#E6E6E6");
-            });
-            <%--刷新市场活动--%>
+
+                <%--刷新市场活动--%>
+                refreshActivityRelation();
+
+                <%--关联市场活动查询--%>
+                $("#selectSurplusActivityRelation").keydown(function (event) {
+
+                    if (event.keyCode == 13) {
+
+                        var name = $.trim($("#selectSurplusActivityRelation").val());
+                        $.ajax({
+                            url: "workbench/activity/getActivityListByNameNotByClueId.do",
+                            data: {
+                                "name": name,
+                                "id": "${clue.id}"
+                            },
+                            dataType: "json",
+                            type: "get",
+                            success: function (data) {
+                                var html = "";
+                                $.each(data, function (i, n) {
+                                    html += '<tr>';
+                                    html += '<td><input type="checkbox" name="xz" value="' + n.id + '"/></td>';
+                                    html += '<td>' + n.name + '</td>';
+                                    html += '<td>' + n.startDate + '</td>';
+                                    html += '<td>' + n.endDate + '</td>';
+                                    html += '<td>' + n.owner + '</td>';
+                                    html += '</tr>';
+                                })
+                                $("#showSurplusActivityRelation").html(html);
+
+                            }
+                        })
+                        return false;
+
+                    }
+                })
+            }
+        );
+        <%--显示关联市场活动--%>
+        function refreshActivityRelation() {
             $.ajax({
                 url: "workbench/activity/showActivityRelation.do",
                 type: "get",
@@ -71,15 +112,35 @@
                         html += '<td>' + n.startDate + '</td>';
                         html += '<td>' + n.endDate + '</td>';
                         html += '<td>' + n.owner + '</td>';
-                        html += '<td><a  href="javascript:void(0);"   style="text-decoration: none;"><span class="glyphicon glyphicon-remove" ></span>解除关联</a></td>';
+                        html += '<td><a  href="javascript:void(0);" onclick="unbund(\'' + n.id + '\')"  style="text-decoration: none;"><span class="glyphicon glyphicon-remove" ></span>解除关联</a></td>';
                         html += '</tr>';
                     })
                     $("#showActivityRelation").html(html);
                 }
             })
+        }
 
-        });
+        <%--解除关联市场活动--%>
+        function unbund(id) {
+            $.ajax({
+                url: "workbench/activity/unbund.do",
+                data: {
+                    "activityId": id,
+                    "clueId": "${clue.id}"
+                },
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    if (data) {
+                        refreshActivityRelation();
+                    } else {
+                        alert("解除关联失败是重试");
+                    }
 
+                }
+            })
+        }
+        <%--显示关联市场活动--%>
         function correlationActivity() {
             $("#bundModal").modal("show");
 
@@ -95,12 +156,11 @@
                     var html = "";
                     $.each(data, function (i, n) {
                         html += '<tr>';
-                        html +='<td><input type="checkbox"/></td>';
+                        html += '<td><input type="checkbox" name="xz" value="' + n.id + '"/></td>';
                         html += '<td>' + n.name + '</td>';
                         html += '<td>' + n.startDate + '</td>';
                         html += '<td>' + n.endDate + '</td>';
                         html += '<td>' + n.owner + '</td>';
-                        html += '<td><a  href="javascript:void(0);"   style="text-decoration: none;"><span class="glyphicon glyphicon-remove" ></span>解除关联</a></td>';
                         html += '</tr>';
                     })
                     $("#showSurplusActivityRelation").html(html);
@@ -108,8 +168,9 @@
                 }
             })
         }
-    </script>
 
+
+    </script>
 </head>
 <body>
 
@@ -127,7 +188,8 @@
                 <div class="btn-group" style="position: relative; top: 18%; left: 8px;">
                     <form class="form-inline" role="form">
                         <div class="form-group has-feedback">
-                            <input type="text" class="form-control" style="width: 300px;"
+                            <input type="text" id="selectSurplusActivityRelation" class="form-control"
+                                   style="width: 300px;"
                                    placeholder="请输入市场活动名称，支持模糊查询">
                             <span class="glyphicon glyphicon-search form-control-feedback"></span>
                         </div>
@@ -343,7 +405,7 @@
         </h3>
     </div>
     <div style="position: relative; height: 50px; width: 500px;  top: -72px; left: 700px;">
-        <button type="button" class="btn btn-default" onclick="window.location.href='workbench/clue/convert.jsp';"><span
+        <button type="button" class="btn btn-default" onclick="window.location.href='workbench/clue/convert.jsp?id=${clue.id}&fullname=${clue.fullname}&appellation=${clue.appellation}&owner=${clue.owner}&company=${clue.company}';"><span
                 class="glyphicon glyphicon-retweet"></span> 转换
         </button>
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editClueModal"><span

@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: 王硕
@@ -33,7 +35,57 @@ public class ClueController extends HttpServlet {
             showActivityRelation(requset, response);
         }else if("/workbench/activity/showSurplusActivityRelation.do".equals(path)){
             showSurplusActivityRelation(requset, response);
+        }else if("/workbench/activity/unbund.do".equals(path)){
+            unbund(requset, response);
+        }else if("/workbench/activity/getActivityListByNameNotByClueId.do".equals(path)){
+            getActivityListByNameNotByClueId(requset, response);
+        }else if("/workbench/activity/convertShowContactsActivityRelation.do".equals(path)){
+            convertShowContactsActivityRelation(requset, response);
+        }else if("/workbench/activity/convertSelectSurplusActivityRelation.do".equals(path)){
+            convertSelectSurplusActivityRelation(requset, response);
         }
+    }
+
+    private void convertSelectSurplusActivityRelation(HttpServletRequest requset, HttpServletResponse response) {
+        String name =requset.getParameter("name");
+        String id =requset.getParameter("id");
+        ClueService  cs =(ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        Map<String,Object>  map =new HashMap<>();
+        map.put("id", id);
+        map.put("name",name);
+        List<Activity> alist =cs.convertSelectSurplusActivityRelation(map);
+        PrintJson.printJsonObj(response, alist);
+    }
+
+    private void convertShowContactsActivityRelation(HttpServletRequest requset, HttpServletResponse response) {
+        System.out.println("查询转换线索关联信息");
+        String id =requset.getParameter("id");
+        ClueService  cs =(ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        List<Activity> alist =cs.convertShowContactsActivityRelation(id);
+        PrintJson.printJsonObj(response, alist);
+    }
+
+    private void getActivityListByNameNotByClueId(HttpServletRequest requset, HttpServletResponse response) {
+        String name =requset.getParameter("name");
+        String id =requset.getParameter("id");
+        ClueService  cs =(ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        Map<String,Object>  map =new HashMap<>();
+        map.put("id", id);
+        map.put("name",name);
+        List<Activity> alist =cs.getActivityListByNameNotByClueId(map);
+        PrintJson.printJsonObj(response, alist);
+    }
+
+    private void unbund(HttpServletRequest requset, HttpServletResponse response) {
+        System.out.println("解除关联");
+        String activityId =requset.getParameter("activityId");
+        String clueId =requset.getParameter("clueId");
+        ClueService  cs =(ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        Map<String,Object>  map =new HashMap<>();
+        map.put("activityId", activityId);
+        map.put("clueId",clueId);
+        boolean flag =cs.unbund(map);
+        PrintJson.printJsonFlag(response, flag);
     }
 
     private void showSurplusActivityRelation(HttpServletRequest requset, HttpServletResponse response) {

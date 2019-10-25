@@ -4,6 +4,7 @@ import com.bjpowernode.crm.workbench.domain.Activity;
 import com.bjpowernode.crm.workbench.domain.Clue;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: 王硕
@@ -17,4 +18,12 @@ public interface ClueService {
     List<Activity> showActivityRelation(String id);
 
     List<Activity> showSurplusActivityRelation(String id);
+
+    boolean unbund(Map<String,Object> map);
+
+    List<Activity> getActivityListByNameNotByClueId(Map<String,Object> map);
+
+    List<Activity> convertShowContactsActivityRelation(String id);
+
+    List<Activity> convertSelectSurplusActivityRelation(Map<String, Object> map);
 }

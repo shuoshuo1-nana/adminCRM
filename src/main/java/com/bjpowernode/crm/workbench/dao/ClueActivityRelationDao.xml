@@ -47,7 +47,67 @@
 
     </select>
 	
-  	
+  	<delete id="unbund">
+        delete from tbl_clue_activity_relation where clueId =#{clueId} and activityId = #{activityId}
+    </delete>
+
+
+    <select id="getActivityListByNameNotByClueId" resultType="Activity">
+        select
+          *
+        from (select
+          a.id,
+          u.name as owner,
+          a.name,
+          a.startDate,
+          a.endDate,
+          a.cost,
+          a.description,
+          a.createTime,
+          a.createBy,
+          a.editTime,
+          a.editBy
+
+        from tbl_activity a
+        join tbl_user u
+        on  a.owner =u.id
+        where a.id not in (select car.activityId from tbl_clue_activity_relation  car where car.clueId=#{id})) as c
+        <where>
+            <if test="name!=null and name!=''">
+                c.name like  '%' #{name} '%'
+            </if>
+        </where>
+
+    </select>
+
+
+    <select id="convertSelectSurplusActivityRelation" resultType="Activity">
+        select
+        *
+        from (select
+        a.id,
+        u.name as owner,
+        a.name,
+        a.startDate,
+        a.endDate,
+        a.cost,
+        a.description,
+        a.createTime,
+        a.createBy,
+        a.editTime,
+        a.editBy
+
+        from tbl_activity a
+        join tbl_user u
+        on  a.owner =u.id
+        where a.id in (select car.activityId from tbl_clue_activity_relation  car where car.clueId=#{id})) as c
+        <where>
+            <if test="name!=null and name!=''">
+                c.name like  '%' #{name} '%'
+            </if>
+        </where>
+
+    </select>
 </mapper>
 
 

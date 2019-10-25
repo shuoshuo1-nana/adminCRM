@@ -78,6 +78,14 @@
         <url-pattern>/workbench/activity/showActivityRelation.do</url-pattern>
         <!--显示剩余的信息列表-->
         <url-pattern>/workbench/activity/showSurplusActivityRelation.do</url-pattern>
+        <!--解除关联-->
+        <url-pattern>/workbench/activity/unbund.do</url-pattern>
+        <!--查询关联信息-->
+        <url-pattern>/workbench/activity/getActivityListByNameNotByClueId.do</url-pattern>
+        <!--显示转换线索关联信息-->
+        <url-pattern>/workbench/activity/convertShowContactsActivityRelation.do</url-pattern>
+        <!--查询转换线索关联信息-->
+        <url-pattern>/workbench/activity/convertSelectSurplusActivityRelation.do</url-pattern>
     </servlet-mapping>
 
     <!--用户控制器-->

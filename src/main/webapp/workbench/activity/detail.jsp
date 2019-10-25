@@ -147,6 +147,7 @@
                     url: "workbench/activity/deleteRemark.do",
                     data: {
                         "id": id
+                        "id":
                     },
                     type: "post",
                     dataType: "json",
