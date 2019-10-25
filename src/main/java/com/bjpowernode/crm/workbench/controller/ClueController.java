@@ -5,6 +5,7 @@ import com.bjpowernode.crm.utils.DateTimeUtil;
 import com.bjpowernode.crm.utils.PrintJson;
 import com.bjpowernode.crm.utils.ServiceFactory;
 import com.bjpowernode.crm.utils.UUIDUtil;
+import com.bjpowernode.crm.workbench.domain.Activity;
 import com.bjpowernode.crm.workbench.domain.Clue;
 import com.bjpowernode.crm.workbench.service.ClueService;
 import com.bjpowernode.crm.workbench.service.impl.ClueServiceImpl;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Author: 王硕
@@ -24,11 +26,28 @@ public class ClueController extends HttpServlet {
     protected void service(HttpServletRequest requset, HttpServletResponse response) throws ServletException, IOException {
         String path = requset.getServletPath();
         if ("/workbench/activity/addClue.do".equals(path)){
-            System.out.println("显示User名称详情");
             addClue(requset, response);
         }else if("/workbench/activity/showClue.do".equals(path)){
             showClue(requset, response);
+        }else if("/workbench/activity/showActivityRelation.do".equals(path)){
+            showActivityRelation(requset, response);
+        }else if("/workbench/activity/showSurplusActivityRelation.do".equals(path)){
+            showSurplusActivityRelation(requset, response);
         }
+    }
+
+    private void showSurplusActivityRelation(HttpServletRequest requset, HttpServletResponse response) {
+        String id =requset.getParameter("id");
+        ClueService  cs =(ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        List<Activity> alist =cs.showSurplusActivityRelation(id);
+        PrintJson.printJsonObj(response, alist);
+    }
+
+    private void showActivityRelation(HttpServletRequest requset, HttpServletResponse response) {
+        String id =requset.getParameter("id");
+        ClueService  cs =(ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        List<Activity> alist =cs.showActivityRelation(id);
+        PrintJson.printJsonObj(response, alist);
     }
 
     private void showClue(HttpServletRequest requset, HttpServletResponse response) throws ServletException, IOException {
