@@ -31,6 +31,8 @@
                     $("#create-transaction2").hide(200);
                 }
             });
+
+
             $("#convertSelectSurplusActivityRelation").keydown(function (event) {
 
                 if (event.keyCode == 13) {
@@ -48,7 +50,7 @@
                             $.each(data, function (i, n) {
                                 html += '<tr>';
                                 html += '<td><input type="checkbox" name="xz" value="' + n.id + '"/></td>';
-                                html += '<td>' + n.name + '</td>';
+                                html += '<td id="s'+n.id+'">' + n.name + '</td>';
                                 html += '<td>' + n.startDate + '</td>';
                                 html += '<td>' + n.endDate + '</td>';
                                 html += '<td>' + n.owner + '</td>';
@@ -62,6 +64,21 @@
 
                 }
             })
+
+            $("#confirmBtn").click(function () {
+                var $xz = $("input[name=xz]:checked");
+
+                if($xz.length==0){
+                    alert("请选择活动选项");
+                }else{
+                    var id =$xz.val();
+                    $("#concealID").val(id);
+                    var name =$("#s"+id).html();
+                    $("#activityName").val(name);
+                    $("#searchActivityModal").modal("hide");
+                }
+            })
+
 
         });
 
@@ -78,8 +95,8 @@
                     $.each(data, function (i, n) {
 
                         html += '<tr>';
-                        html += '<td><input type="radio" name="activity"/></td>';
-                        html += '<td>' + n.name + '</td>';
+                        html += '<td><input type="checkbox" name="xz" value="' + n.id + '"/></td>';
+                        html += '<td id="s'+n.id+'">' + n.name + '</td>';
                         html += '<td>' + n.startDate + '</td>';
                         html += '<td>' + n.endDate + '</td>';
                         html += '<td>' + n.owner + '</td>';
@@ -149,6 +166,10 @@
                     </tbody>
                 </table>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="confirmBtn">确认</button>
+            </div>
         </div>
     </div>
 </div>
@@ -194,11 +215,10 @@
             </select>
         </div>
         <div class="form-group" style="width: 400px;position: relative; left: 20px;">
-            <label for="activity">市场活动源&nbsp;&nbsp;<a href="javascript:void(0);"
-                                                      onclick="convertShowContactsActivityRelation()"
-                                                      style="text-decoration: none;"><span
+            <label for="activity">市场活动源&nbsp;&nbsp;<a href="javascript:void(0);" onclick="convertShowContactsActivityRelation()" style="text-decoration: none;"><span
                     class="glyphicon glyphicon-search"></span></a></label>
-            <input type="text" class="form-control" id="activity" placeholder="点击上面搜索" readonly>
+            <input type="text" class="form-control" id="activityName" placeholder="点击上面搜索" readonly>
+            <input type="hidden" id="concealID">
         </div>
     </form>
 
