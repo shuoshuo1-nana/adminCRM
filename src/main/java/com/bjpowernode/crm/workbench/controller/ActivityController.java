@@ -9,6 +9,7 @@ import com.bjpowernode.crm.utils.ServiceFactory;
 import com.bjpowernode.crm.utils.UUIDUtil;
 import com.bjpowernode.crm.workbench.domain.Activity;
 import com.bjpowernode.crm.workbench.domain.ActivityRemark;
+import com.bjpowernode.crm.workbench.domain.Clue;
 import com.bjpowernode.crm.workbench.service.ActivityService;
 import com.bjpowernode.crm.workbench.service.impl.ActivityServiceImpl;
 import com.bjpowernode.crm.workbench.vo.PagingVO;
@@ -54,12 +55,15 @@ public class ActivityController extends HttpServlet {
         } else if ("/workbench/activity/addRemark.do".equals(path)) {
             System.out.println("显示市场信息详情");
             addRemark(requset, response);
-        }else if ("/workbench/activity/deleteRemark.do".equals(path)) {
+        } else if ("/workbench/activity/deleteRemark.do".equals(path)) {
             System.out.println("删除市场信息详情");
             deleteRemark(requset, response);
-        }else if ("/workbench/activity/updateRemark.do".equals(path)) {
+        } else if ("/workbench/activity/updateRemark.do".equals(path)) {
             System.out.println("修改市场信息详情");
             updateRemark(requset, response);
+        } else if ("/workbench/activity/showUserName.do".equals(path)) {
+            System.out.println("显示User名称详情");
+            selectUser(requset, response);
         }
     }
 
@@ -69,8 +73,8 @@ public class ActivityController extends HttpServlet {
         String noteContent = requset.getParameter("noteContent");
 //        String activityId = requset.getParameter("activityId");
         //获取内部信息
-        String editTime =DateTimeUtil.getSysTime();
-        String editBy =((User) requset.getSession().getAttribute("user")).getName();
+        String editTime = DateTimeUtil.getSysTime();
+        String editBy = ((User) requset.getSession().getAttribute("user")).getName();
         ActivityRemark ar = new ActivityRemark();
         ar.setEditFlag("1");
 //        ar.setActivityId(activityId);
@@ -81,8 +85,6 @@ public class ActivityController extends HttpServlet {
         ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
         Map<String, Object> arr = as.updateRemark(ar);
         PrintJson.printJsonObj(response, arr);
-
-
     }
 
     private void deleteRemark(HttpServletRequest requset, HttpServletResponse response) {
@@ -109,7 +111,7 @@ public class ActivityController extends HttpServlet {
 
 
         ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
-        Map<String,Object> map = as.addRemark(ar);
+        Map<String, Object> map = as.addRemark(ar);
 
         PrintJson.printJsonObj(response, map);
     }

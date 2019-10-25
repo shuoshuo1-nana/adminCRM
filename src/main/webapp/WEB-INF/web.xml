@@ -1,78 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
-  <display-name>crm</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-  </welcome-file-list>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         id="WebApp_ID" version="2.5">
+    <display-name>crm</display-name>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
 
-  <listener>
-    <listener-class>com.bjpowernode.crm.web.listener.SysInitListener</listener-class>
-  </listener>
+    <listener>
+        <listener-class>com.bjpowernode.crm.web.listener.SysInitListener</listener-class>
+    </listener>
 
-  <!--登录会话过滤器-->
-  <filter>
-    <filter-name>LoginRegisterFilter</filter-name>
-    <filter-class>com.bjpowernode.crm.web.filter.LoginRegisterFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>LoginRegisterFilter</filter-name>
-    <url-pattern>*.do</url-pattern>
-    <url-pattern>*.jsp</url-pattern>
-  </filter-mapping>
-  <!--登录字符编码过滤器-->
-  <filter>
-    <filter-name>LoginFilter</filter-name>
-    <filter-class>com.bjpowernode.crm.web.filter.LoginFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>LoginFilter</filter-name>
-    <url-pattern>*.do</url-pattern>
-  </filter-mapping>
-  <!--市场活动控制-->
-  <servlet>
-    <servlet-name>ActivityController</servlet-name>
-    <servlet-class>com.bjpowernode.crm.workbench.controller.ActivityController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ActivityController</servlet-name>
-    <url-pattern>/workbench/Activity/Activity.do</url-pattern>
-    <!--添加市场活动-->
-    <url-pattern>/workbench/Activity/AddActivity.do</url-pattern>
-    <!--显示市场人名-->
-    <url-pattern>/workbench/Activity/selectActivity.do</url-pattern>
-    <!--显示市场活动信息-->
-    <url-pattern>/workbench/Activity/showActivity.do</url-pattern>
-    <!--更新市场活动信息-->
-    <url-pattern>/workbench/Activity/update.do</url-pattern>
-    <!--删除市场活动信息-->
-    <url-pattern>/workbench/Activity/delete.do</url-pattern>
-    <!--展现市场活动信息-->
-    <url-pattern>/workbench/activity/detail.do</url-pattern>
-    <!--展示备注详情-->
-    <url-pattern>/workbench/activity/showRemark.do</url-pattern>
-    <!--添加备注-->
-    <url-pattern>/workbench/activity/addRemark.do</url-pattern>
-    <!--删除备注-->
-    <url-pattern>/workbench/activity/deleteRemark.do</url-pattern>
-    <!--更新备注-->
-    <url-pattern>/workbench/activity/updateRemark.do</url-pattern>
-  </servlet-mapping>
+    <!--登录会话过滤器-->
+    <filter>
+        <filter-name>LoginRegisterFilter</filter-name>
+        <filter-class>com.bjpowernode.crm.web.filter.LoginRegisterFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginRegisterFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+    <!--登录字符编码过滤器-->
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>com.bjpowernode.crm.web.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+    <!--市场活动控制-->
+    <servlet>
+        <servlet-name>ActivityController</servlet-name>
+        <servlet-class>com.bjpowernode.crm.workbench.controller.ActivityController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ActivityController</servlet-name>
+        <url-pattern>/workbench/Activity/Activity.do</url-pattern>
+        <!--添加市场活动-->
+        <url-pattern>/workbench/Activity/AddActivity.do</url-pattern>
+        <!--显示市场人名-->
+        <url-pattern>/workbench/Activity/selectActivity.do</url-pattern>
+        <!--显示市场活动信息-->
+        <url-pattern>/workbench/Activity/showActivity.do</url-pattern>
+        <!--更新市场活动信息-->
+        <url-pattern>/workbench/Activity/update.do</url-pattern>
+        <!--删除市场活动信息-->
+        <url-pattern>/workbench/Activity/delete.do</url-pattern>
+        <!--展现市场活动信息-->
+        <url-pattern>/workbench/activity/detail.do</url-pattern>
+        <!--展示备注详情-->
+        <url-pattern>/workbench/activity/showRemark.do</url-pattern>
+        <!--添加备注-->
+        <url-pattern>/workbench/activity/addRemark.do</url-pattern>
+        <!--删除备注-->
+        <url-pattern>/workbench/activity/deleteRemark.do</url-pattern>
+        <!--更新备注-->
+        <url-pattern>/workbench/activity/updateRemark.do</url-pattern>
+        <!--显示人名称-->
+        <url-pattern>/workbench/activity/showUserName.do</url-pattern>
+
+    </servlet-mapping>
+
+    <!--线索控制-->
+    <servlet>
+        <servlet-name>ClueController</servlet-name>
+        <servlet-class>com.bjpowernode.crm.workbench.controller.ClueController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClueController</servlet-name>
+        <!--保存线索-->
+        <url-pattern>/workbench/activity/addClue.do</url-pattern>
+        <!--显示线索-->
+        <url-pattern>/workbench/activity/showClue.do</url-pattern>
+    </servlet-mapping>
+
+    <!--用户控制器-->
+    <servlet>
+        <servlet-name>UserController</servlet-name>
+        <servlet-class>com.bjpowernode.crm.settings.web.controller.LoginController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserController</servlet-name>
+        <url-pattern>/settings/user/login.do</url-pattern>
+
+    </servlet-mapping>
 
 
-
-  <!--用户控制器-->
-  <servlet>
-    <servlet-name>UserController</servlet-name>
-    <servlet-class>com.bjpowernode.crm.settings.web.controller.LoginController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UserController</servlet-name>
-    <url-pattern>/settings/user/login.do</url-pattern>
-    
-  </servlet-mapping>
-  
-  
-  
 </web-app>
 
 

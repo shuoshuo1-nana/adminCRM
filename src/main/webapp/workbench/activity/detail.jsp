@@ -8,12 +8,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <base<%=basePath%>/>
+    <base href="<%=basePath%>"/>
     <meta charset="UTF-8">
 
-    <link href="../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
-    <script type="text/javascript" src="../../jquery/jquery-1.11.1-min.js"></script>
-    <script type="text/javascript" src="../../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+    <link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
+    <script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
 
@@ -67,13 +67,38 @@
 
             <%--保存--%>
             addRemark();
+
+
+            $("#updateRemarkBtn").click(function () {
+                var id =$("#remarkId").val();
+                var noteContent = $.trim($("#noteContent")  .val());
+                $.ajax({
+                    url: "workbench/activity/updateRemark.do",
+                    data: {
+                        "id": id,
+                        "activityId": "${a.id}",
+                        "noteContent": noteContent
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data) {
+                            $("#s"+id).html(data.arr.noteContent);
+                            $("#e"+id).html(data.arr.editTime+" 由"+data.arr.editBy);
+                            $("#editRemarkModal").modal("hide");
+                        } else {
+                            alert("更改失败，请重试");
+                        }
+                    }
+                })
+            })
         });
 
         <%--显示备注信息--%>
 
         function remark() {
             $.ajax({
-                url: "showRemark.do",
+                url: "workbench/activity/showRemark.do",
                 data: {
                     "id": "${a.id}"
                 },
@@ -86,7 +111,7 @@
                     $.each(data, function (i, n) {
 
                         html += '<div id="' + n.id + '" class="remarkDiv" style="height: 60px;">';
-                        html += '<img title="zhangsan" src="../../image/user-thumbnail.png" style="width: 30px; height:30px;">';
+                        html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
                         html += '<div style="position: relative; top: -40px; left: 40px;" >';
                         html += '<h5 id="s' + n.id + '">' + n.noteContent + '</h5>';
                         html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${a.name}</b> <small id="e'+n.id+'" style="color: gray;"> ' + (n.editFlag == 0 ? n.createTime : n.editTime) + '由' + (n.editFlag == 0 ? n.createBy : n.editBy) + '</small>';
@@ -108,30 +133,9 @@
         <%--更新备注--%>
 
         function updateRemark(id, a) {
+            $("#remarkId").val(id);
             $("#editRemarkModal").modal("show");
             $("#noteContent").val(a);
-            $("#updateRemarkBtn").click(function () {
-                var noteContent = $("#noteContent").val();
-                $.ajax({
-                    url: "updateRemark.do",
-                    data: {
-                        "id": id,
-                        "activityId": "${a.id}",
-                        "noteContent": noteContent
-                    },
-                    type: "post",
-                    dataType: "json",
-                    success: function (data) {
-                        if (data) {
-                            $("#s"+id).html(data.arr.noteContent);
-                            $("#e"+id).html(data.arr.editTime+" 由"+data.arr.editBy);
-                            $("#editRemarkModal").modal("hide");
-                        } else {
-                            alert("更改失败，请重试");
-                        }
-                    }
-                })
-            })
         }
 
 
@@ -140,7 +144,7 @@
         function deleteRemark(id) {
             if (confirm("是否删除")) {
                 $.ajax({
-                    url: "deleteRemark.do",
+                    url: "workbench/activity/deleteRemark.do",
                     data: {
                         "id": id
                     },
@@ -166,7 +170,7 @@
                 var text = $.trim($("#remark").val());
                 var html = "";
                 $.ajax({
-                    url: "addRemark.do",
+                    url: "workbench/activity/addRemark.do",
                     data: {
                         "id": "${a.id}",
                         "noteContent": text
@@ -178,7 +182,7 @@
                         if (data.flag) {
 
                             html += '<div id="' + data.arr.id + '" class="remarkDiv" style="height: 60px;">';
-                            html += '<img title="zhangsan" src="../../image/user-thumbnail.png" style="width: 30px; height:30px;">';
+                            html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
                             html += '<div style="position: relative; top: -40px; left: 40px;" >';
                             html += '<h5 id="s' + data.arr.id + '">' + data.arr.noteContent + '</h5>';
                             html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${a.name}</b> <small id="e'+data.arr.id+'" style="color: gray;"> ' + data.arr.createTime + '由' + data.arr.createBy + '</small>';
