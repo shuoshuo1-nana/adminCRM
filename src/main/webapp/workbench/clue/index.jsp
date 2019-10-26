@@ -555,7 +555,7 @@
                 <tr>
                     <td><input type="checkbox"/></td>
                     <td><a style="text-decoration: none; cursor: pointer;"
-                           onclick="window.location.href='workbench/activity/showClue.do?id=0981a0cf8594450c9ad529c0de2b90aa';">李四先生</a></td>
+                           onclick="window.location.href='workbench/activity/showClue.do?id=5223cf06baee49f198b7df1c0bd8e7de';">李四先生</a></td>
                     <td>动力节点</td>
                     <td>010-84846003</td>
                     <td>12345678901</td>

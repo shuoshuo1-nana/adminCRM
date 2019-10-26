@@ -213,6 +213,8 @@ public class ClueServiceImpl implements ClueService {
                 flag = false;
             }
         }
+        System.out.println("----------------------------------------------------");
+        System.out.println(flag);
         //删除线索市场活动关联表
         for (ClueActivityRelation clueActivityRelation : slist) {
             int count9 =clueActivityRelationDao.delete(clueActivityRelation);
@@ -220,11 +222,15 @@ public class ClueServiceImpl implements ClueService {
                 flag = false;
             }
         }
+        System.out.println("----------------------------------------------------");
+        System.out.println(flag);
         //删除线索表
         int count10 =clueDao.delete(clueId);
         if (count10 != 1) {
             flag = false;
         }
+        System.out.println("----------------------------------------------------");
+        System.out.println(flag);
 
         return flag;
     }
