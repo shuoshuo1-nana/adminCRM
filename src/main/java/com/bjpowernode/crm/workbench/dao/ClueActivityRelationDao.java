@@ -18,4 +18,8 @@ public interface ClueActivityRelationDao {
     List<Activity> getActivityListByNameNotByClueId(Map<String,Object> map);
 
     List<Activity> convertSelectSurplusActivityRelation(Map<String, Object> map);
+
+    List<ClueActivityRelation> showActivityRelationById(String clueId);
+
+    int delete(ClueActivityRelation clueActivityRelation);
 }

@@ -108,7 +108,16 @@
         </where>
 
     </select>
+
+    <select id="showActivityRelationById" resultType="ClueActivityRelation">
+        select * from tbl_clue_activity_relation where clueId =#{clueId}
+    </select>
+
+    <delete id="delete">
+        delete from tbl_clue_activity_relation where clueId =#{id}
+    </delete>
 </mapper>
+
 
 
 

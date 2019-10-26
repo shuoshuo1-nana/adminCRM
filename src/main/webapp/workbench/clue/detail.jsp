@@ -56,7 +56,17 @@
                     $(this).children("span").css("color", "#E6E6E6");
                 });
 
+                <%--全选设值--%>
+                $("#qx").click(function () {
+                    $("input[name=xz]").prop("checked",this.checked)
+                });
 
+
+                <%--关联市场活动--%>
+                $("#detail-correlationActivity").click(function () {
+                    var $xz =$("input[name=xz]:checked")
+
+                })
                 <%--刷新市场活动--%>
                 refreshActivityRelation();
 
@@ -198,7 +208,7 @@
                 <table id="activityTable" class="table table-hover" style="width: 900px; position: relative;top: 10px;">
                     <thead>
                     <tr style="color: #B3B3B3;">
-                        <td><input type="checkbox"/></td>
+                        <td><input id="qx" type="checkbox"/></td>
                         <td>名称</td>
                         <td>开始日期</td>
                         <td>结束日期</td>
@@ -207,26 +217,12 @@
                     </tr>
                     </thead>
                     <tbody id="showSurplusActivityRelation">
-                    <%--<tr>
-                        <td><input type="checkbox"/></td>
-                        <td>发传单</td>
-                        <td>2020-10-10</td>
-                        <td>2020-10-20</td>
-                        <td>zhangsan</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"/></td>
-                        <td>发传单</td>
-                        <td>2020-10-10</td>
-                        <td>2020-10-20</td>
-                        <td>zhangsan</td>
-                    </tr>--%>
                     </tbody>
                 </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">关联</button>
+                <button type="button" class="btn btn-primary" id="detail-correlationActivity">关联</button>
             </div>
         </div>
     </div>

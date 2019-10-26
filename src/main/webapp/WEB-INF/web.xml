@@ -86,6 +86,8 @@
         <url-pattern>/workbench/activity/convertShowContactsActivityRelation.do</url-pattern>
         <!--查询转换线索关联信息-->
         <url-pattern>/workbench/activity/convertSelectSurplusActivityRelation.do</url-pattern>
+        <!--转换客户-->
+        <url-pattern>/workbench/activity/convertConversionClient.do</url-pattern>
     </servlet-mapping>
 
     <!--用户控制器-->

@@ -50,7 +50,7 @@
                             $.each(data, function (i, n) {
                                 html += '<tr>';
                                 html += '<td><input type="checkbox" name="xz" value="' + n.id + '"/></td>';
-                                html += '<td id="s'+n.id+'">' + n.name + '</td>';
+                                html += '<td id="s' + n.id + '">' + n.name + '</td>';
                                 html += '<td>' + n.startDate + '</td>';
                                 html += '<td>' + n.endDate + '</td>';
                                 html += '<td>' + n.owner + '</td>';
@@ -68,17 +68,27 @@
             $("#confirmBtn").click(function () {
                 var $xz = $("input[name=xz]:checked");
 
-                if($xz.length==0){
+                if ($xz.length == 0) {
                     alert("请选择活动选项");
-                }else{
-                    var id =$xz.val();
+                } else {
+                    var id = $xz.val();
                     $("#concealID").val(id);
-                    var name =$("#s"+id).html();
+                    var name = $("#s" + id).html();
                     $("#activityName").val(name);
                     $("#searchActivityModal").modal("hide");
                 }
             })
 
+
+
+            <%--转换按键--%>
+            $("#conversionBtn").click(function () {
+                if ($("#isCreateTransaction").prop("checked")){
+                    $("#formBtn").submit();
+                }else{
+                    window.location.href="workbench/activity/convertConversionClient.do?clueid=${param.id}";
+                }
+            });
 
         });
 
@@ -86,7 +96,7 @@
             $.ajax({
                 url: "workbench/activity/convertShowContactsActivityRelation.do",
                 data: {
-                    "id":"${param.id}"
+                    "id": "${param.id}"
                 },
                 type: "get",
                 dataType: "json",
@@ -96,7 +106,7 @@
 
                         html += '<tr>';
                         html += '<td><input type="checkbox" name="xz" value="' + n.id + '"/></td>';
-                        html += '<td id="s'+n.id+'">' + n.name + '</td>';
+                        html += '<td id="s' + n.id + '">' + n.name + '</td>';
                         html += '<td>' + n.startDate + '</td>';
                         html += '<td>' + n.endDate + '</td>';
                         html += '<td>' + n.owner + '</td>';
@@ -111,11 +121,10 @@
         }
 
 
-
-
     </script>
 </head>
 <body>
+
 
 <!-- 搜索市场活动的模态窗口 -->
 <div class="modal fade" id="searchActivityModal" role="dialog">
@@ -131,7 +140,8 @@
                 <div class="btn-group" style="position: relative; top: 18%; left: 8px;">
                     <form class="form-inline" role="form">
                         <div class="form-group has-feedback">
-                            <input type="text" class="form-control" id="convertSelectSurplusActivityRelation" style="width: 300px;"
+                            <input type="text" class="form-control" id="convertSelectSurplusActivityRelation"
+                                   style="width: 300px;"
                                    placeholder="请输入市场活动名称，支持模糊查询">
                             <span class="glyphicon glyphicon-search form-control-feedback"></span>
                         </div>
@@ -149,20 +159,6 @@
                     </tr>
                     </thead>
                     <tbody id="convertShowContactsActivityRelation">
-                    <%--<tr>
-                        <td><input type="radio" name="activity"/></td>
-                        <td>发传单</td>
-                        <td>2020-10-10</td>
-                        <td>2020-10-20</td>
-                        <td>zhangsan</td>
-                    </tr>
-                    <tr>
-                        <td><input type="radio" name="activity"/></td>
-                        <td>发传单</td>
-                        <td>2020-10-10</td>
-                        <td>2020-10-20</td>
-                        <td>zhangsan</td>
-                    </tr>--%>
                     </tbody>
                 </table>
             </div>
@@ -192,22 +188,24 @@
 <div id="create-transaction2"
      style="position: relative; left: 40px; top: 20px; width: 80%; background-color: #F7F7F7; display: none;">
 
-    <form>
+    <form id="formBtn" action="workbench/activity/convertConversionClient.do" method="post">
+        <input type="hidden" value="a" name="flag">
+        <input type="hidden" value="${param.id}" name="clueid">
         <div class="form-group" style="width: 400px; position: relative; left: 20px;">
             <label for="amountOfMoney">金额</label>
-            <input type="text" class="form-control" id="amountOfMoney">
+            <input type="text" class="form-control" name="money" id="amountOfMoney">
         </div>
         <div class="form-group" style="width: 400px;position: relative; left: 20px;">
             <label for="tradeName">交易名称</label>
-            <input type="text" class="form-control" id="tradeName" value="${param.company}-">
+            <input type="text" class="form-control" id="tradeName" name="name" value="${param.company}-">
         </div>
         <div class="form-group" style="width: 400px;position: relative; left: 20px;">
             <label for="expectedClosingDate">预计成交日期</label>
-            <input type="text" class="form-control" id="expectedClosingDate">
+            <input type="text" class="form-control" id="expectedClosingDate" name="expectedDate">
         </div>
         <div class="form-group" style="width: 400px;position: relative; left: 20px;">
             <label for="stage">阶段</label>
-            <select id="stage" class="form-control">
+            <select id="stage" class="form-control" name="stage">
                 <option></option>
                 <c:forEach items="${stageList}" var="s">
                     <option value="${s.value}">${s.text}</option>
@@ -215,13 +213,14 @@
             </select>
         </div>
         <div class="form-group" style="width: 400px;position: relative; left: 20px;">
-            <label for="activity">市场活动源&nbsp;&nbsp;<a href="javascript:void(0);" onclick="convertShowContactsActivityRelation()" style="text-decoration: none;"><span
+            <label for="activity">市场活动源&nbsp;&nbsp;<a href="javascript:void(0);"
+                                                      onclick="convertShowContactsActivityRelation()"
+                                                      style="text-decoration: none;"><span
                     class="glyphicon glyphicon-search"></span></a></label>
             <input type="text" class="form-control" id="activityName" placeholder="点击上面搜索" readonly>
-            <input type="hidden" id="concealID">
+            <input type="hidden" id="concealID" name="activityID">
         </div>
     </form>
-
 </div>
 
 <div id="owner" style="position: relative; left: 40px; height: 35px; top: 50px;">
@@ -229,9 +228,12 @@
     <b>${param.owner}</b>
 </div>
 <div id="operation" style="position: relative; left: 40px; height: 35px; top: 100px;">
-    <input class="btn btn-primary" type="button" value="转换">
+    <input class="btn btn-primary" type="button" id="conversionBtn" value="转换">
     &nbsp;&nbsp;&nbsp;&nbsp;
     <input class="btn btn-default" type="button" value="取消">
+
 </div>
+
 </body>
+
 </html>

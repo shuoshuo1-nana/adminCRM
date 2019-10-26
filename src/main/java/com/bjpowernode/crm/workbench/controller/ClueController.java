@@ -7,6 +7,8 @@ import com.bjpowernode.crm.utils.ServiceFactory;
 import com.bjpowernode.crm.utils.UUIDUtil;
 import com.bjpowernode.crm.workbench.domain.Activity;
 import com.bjpowernode.crm.workbench.domain.Clue;
+import com.bjpowernode.crm.workbench.domain.Customer;
+import com.bjpowernode.crm.workbench.domain.Tran;
 import com.bjpowernode.crm.workbench.service.ClueService;
 import com.bjpowernode.crm.workbench.service.impl.ClueServiceImpl;
 
@@ -43,7 +45,43 @@ public class ClueController extends HttpServlet {
             convertShowContactsActivityRelation(requset, response);
         }else if("/workbench/activity/convertSelectSurplusActivityRelation.do".equals(path)){
             convertSelectSurplusActivityRelation(requset, response);
+        }else if("/workbench/activity/convertConversionClient.do".equals(path)){
+            convertConversionClient(requset, response);
         }
+    }
+
+    private void convertConversionClient(HttpServletRequest requset, HttpServletResponse response) throws IOException {
+        //获取信息
+        String clueid =requset.getParameter("clueid");
+        String flag =requset.getParameter("flag");
+        String createBy =((User)requset.getSession().getAttribute("user")).getName();
+        Tran t=null;
+        if ("a".equals(flag)){
+            t = new Tran();
+            String money =requset.getParameter("money");
+            String name =requset.getParameter("name");
+            String expectedDate =requset.getParameter("expectedDate");
+            String stage =requset.getParameter("stage");
+            String activityID =requset.getParameter("activityID");
+
+            t.setId(UUIDUtil.getUUID());
+            t.setCreateBy(createBy);
+            t.setCreateTime(DateTimeUtil.getSysTime());
+            t.setMoney(money);
+            t.setName(name);
+            t.setExpectedDate(expectedDate);
+            t.setStage(stage);
+            t.setActivityId(activityID);
+        }
+        ClueService  cs =(ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        boolean flag1 =cs.convertConversionClient(clueid,createBy,t);
+        if (flag1) {
+            response.sendRedirect(requset.getContextPath() + "workbench/clue/detail.jsp");
+        }else{
+            response.sendRedirect(requset.getContextPath() + "workbench/clue/1111111111111111");
+        }
+
+
     }
 
     private void convertSelectSurplusActivityRelation(HttpServletRequest requset, HttpServletResponse response) {
