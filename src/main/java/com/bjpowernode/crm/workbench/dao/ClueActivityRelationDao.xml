@@ -21,7 +21,8 @@
         from tbl_activity a
         join tbl_user u
         on  a.owner =u.id
-        where a.id in (select car.activityId from tbl_clue_activity_relation  car where car.clueId=#{id})
+        where a.id in (select car.activityId from
+        tbl_clue_activity_relation  car where car.clueId=#{id})
 
     </select>
 

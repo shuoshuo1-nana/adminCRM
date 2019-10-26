@@ -190,7 +190,6 @@ public class ClueServiceImpl implements ClueService {
             if (count6 != 1) {
                 flag = false;
             }
-
             //如果创建了一条交易那就要生成一条交易历史
             TranHistory th = new TranHistory();
             th.setCreateBy(createBy);
@@ -208,7 +207,7 @@ public class ClueServiceImpl implements ClueService {
         }
 
         //删除线索关联的备注信息
-        /*for (ClueRemark clueRemark : clueRemarkList) {
+        for (ClueRemark clueRemark : clueRemarkList) {
           int count8 =clueRemarkDao.delete(clueRemark);
             if (count8 != 1) {
                 flag = false;
@@ -225,7 +224,7 @@ public class ClueServiceImpl implements ClueService {
         int count10 =clueDao.delete(clueId);
         if (count10 != 1) {
             flag = false;
-        }*/
+        }
 
         return flag;
     }

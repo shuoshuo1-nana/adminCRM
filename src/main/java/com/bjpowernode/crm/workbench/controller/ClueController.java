@@ -76,9 +76,9 @@ public class ClueController extends HttpServlet {
         ClueService  cs =(ClueService) ServiceFactory.getService(new ClueServiceImpl());
         boolean flag1 =cs.convertConversionClient(clueid,createBy,t);
         if (flag1) {
-            response.sendRedirect(requset.getContextPath() + "workbench/clue/detail.jsp");
+            response.sendRedirect(requset.getContextPath() + "/workbench/clue/index.jsp");
         }else{
-            response.sendRedirect(requset.getContextPath() + "workbench/clue/1111111111111111");
+            response.sendRedirect(requset.getContextPath() + "/workbench/clue/1111111111111111");
         }
 
 
