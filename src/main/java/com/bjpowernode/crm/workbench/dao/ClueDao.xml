@@ -26,26 +26,28 @@
             nextContactTime,
             address
         ) values (
-          #{id},
-          #{fullname},
-          #{appellation},
-          #{owner},
-          #{company},
-          #{job},
-          #{email},
-          #{phone},
-          #{website},
-          #{mphone},
-          #{state},
-          #{source},
-          #{createBy},
-          #{createTime},
-          #{description},
-          #{contactSummary},
-          #{nextContactTime},
-          #{address}
+            #{id},
+            #{fullname},
+            #{appellation},
+            #{owner},
+            #{company},
+            #{job},
+            #{email},
+            #{phone},
+            #{website},
+            #{mphone},
+            #{state},
+            #{source},
+            #{createBy},
+            #{createTime},
+            #{description},
+            #{contactSummary},
+            #{nextContactTime},
+            #{address}
         )
     </insert>
+
+
     <select id="showClue" resultType="Clue">
         select
             c.id,
