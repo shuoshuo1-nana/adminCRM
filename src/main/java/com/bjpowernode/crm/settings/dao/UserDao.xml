@@ -10,6 +10,11 @@
 	<select id="getUsers" resultType="user">
         select * from tbl_user
     </select>
+    <select id="getUserList" resultType="User">
+
+        select * from tbl_user
+
+    </select>
 	
 </mapper>
 

@@ -98,7 +98,9 @@
     <servlet-mapping>
         <servlet-name>transactionController</servlet-name>
         <!--创建交易所有者列表-->
-        <url-pattern>/workbench/transaction/getCustomerName.do</url-pattern>
+        <url-pattern>/workbench/transaction/getCustomerNameListByName.do</url-pattern>
+        <url-pattern>/workbench/transaction/getContactsListByName.do</url-pattern>
+        <url-pattern>/workbench/transaction/getPossibilityByStage.do</url-pattern>
     </servlet-mapping>
 
     <!--用户控制器-->

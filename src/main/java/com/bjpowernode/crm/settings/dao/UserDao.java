@@ -14,4 +14,6 @@ public interface UserDao {
     User getUser(Map<String, String> map);
 
     List<User> getUsers();
+
+    List<User> getUserList();
 }
