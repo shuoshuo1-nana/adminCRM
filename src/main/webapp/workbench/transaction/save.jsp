@@ -6,9 +6,9 @@
 
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
 
-//    Map<String,String> pMap = (Map<String,String>)application.getAttribute("pMap");
-//
-//    Set<String > set = pMap.keySet();
+    Map<String,String> pMap = (Map<String,String>)application.getAttribute("pMap");
+
+    Set<String > set = pMap.keySet();
 
 
 %>
@@ -30,19 +30,19 @@
 
     <script>
 
-        <%--var json = {--%>
+        var json = {
 
-            <%--<%--%>
-                <%--for(String key:set){--%>
+            <%
+                for(String key:set){
 
-                    <%--String value = pMap.get(key);--%>
-            <%--%>--%>
-            <%--"<%=key%>" : <%=value%>,--%>
-            <%--<%--%>
-                <%--}--%>
+                    String value = pMap.get(key);
+            %>
+            "<%=key%>" : <%=value%>,
+            <%
+                }
 
-            <%--%>--%>
-        <%--};--%>
+            %>
+        };
 
         $(function () {
 

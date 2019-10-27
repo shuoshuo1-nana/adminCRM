@@ -8,9 +8,7 @@ import com.bjpowernode.crm.utils.ServiceFactory;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Author: 王硕
@@ -20,10 +18,6 @@ public class SysInitListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext application = sce.getServletContext();
-
-
-        System.out.println("处理数据字典形成服务器缓存开始");
-
         DicService ds = (DicService) ServiceFactory.getService(new DicServiceImpl());
 
         Map<String, List<DicValue>> map = ds.getAll();
@@ -35,7 +29,18 @@ public class SysInitListener implements ServletContextListener {
             application.setAttribute(key, map.get(key));
 
         }
+        Map<String,String> pMap = new HashMap<>();
+        ResourceBundle rb = ResourceBundle.getBundle("Stage2Possibility");
+        Enumeration<String> keys = rb.getKeys();
+        while(keys.hasMoreElements()){
+            String s = keys.nextElement();
+            String possibility = rb.getString(s);
 
-        System.out.println("处理数据字典形成服务器缓存结束");
+            pMap.put(s, possibility);
+
+            System.out.println("key="+s+" ;value="+possibility);
+
+        }
+        application.setAttribute("pMap", pMap);
     }
 }
